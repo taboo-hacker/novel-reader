@@ -1,6 +1,13 @@
 # 小说阅读器
+<div align="center">
+  <h1>小说阅读器</h1>
+  <p>一个轻量级的本地小说阅读器 Web 应用，基于 Python 标准库实现，无需额外依赖，支持自动解析 ZIP 压缩包中的飞卢小说文本，提供智能分章处理和响应式 Web 阅读界面，适配多种设备。</p>
+</div>
 
-一个轻量级的本地小说阅读器 Web 应用，基于 Python 标准库实现，无需额外依赖，支持自动解析 ZIP 压缩包中的飞卢小说文本，提供智能分章处理和响应式 Web 阅读界面，适配多种设备。
+![Python](https://img.shields.io/badge/Python-3.13+-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+
 
 ## 📦 项目结构
 
