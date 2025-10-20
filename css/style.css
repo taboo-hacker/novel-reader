@@ -1,0 +1,43 @@
+﻿/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.chapter-list {
+    list-style: none;
+    padding: 0;
+}
+
+.chapter-list li {
+    margin-bottom: 10px;
+}
+
+.chapter-list a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+.chapter-list a:hover {
+    text-decoration: underline;
+}
+
+.chapter-content {
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
