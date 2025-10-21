@@ -218,33 +218,33 @@ You should also get your employer (if you work as a programmer) or school, if an
 
 The GNU General Public License does not permit incorporating your program into proprietary programs. If your program is a subroutine library, you may consider it more useful to permit linking proprietary applications with the library. If this is what you want to do, use the GNU Lesser General Public License instead of this License. But first, please read <https://www.gnu.org/licenses/why-not-lgpl.html>.
 
-附加权限声明（基于GPLv3第7条）
+Additional Permissions Statement (Based on GPLv3 Section 7)
 
-版权持有人授予您以下附加权限：
+The copyright holder grants you the following additional permissions:
 
-1. 代码结合与使用权限
-   - 允许将本程序与专有软件结合，形成更大的作品。
-   - 允许用户自由修改代码，无需公开修改内容。
-   - 允许与专有代码结合，但整体作品需遵循本许可证。
+1. Code Combination and Usage Permissions
+   - You are permitted to combine this program with proprietary software to form a larger work.
+   - Users are allowed to freely modify the code without the obligation to disclose the modifications.
+   - Combination with proprietary code is allowed, provided that the resulting work complies with this license.
 
-2. 源代码分发选项
-   - 您无需公开对源代码的修改，但分发时必须提供以下任一项：
-     - 原始项目的完整源代码。
-     - 获取原始源代码的有效方式说明。
+2. Source Code Distribution Options
+   - You are not required to disclose modifications to the source code. However, when distributing, you must provide one of the following:
+     - The complete source code of the original project.
+     - A valid explanation of how to obtain the original source code.
 
-3. 商业使用限制
-   - 禁止未经明确书面授权的商业用途。
-   - 若修改版权信息（包括名称/年份），则该衍生作品必须：
-     - 完全免费开源。
-     - 禁止用于商业用途。
+3. Commercial Use Restrictions
+   - Commercial use is prohibited without explicit written authorization.
+   - If you modify the copyright information (including name/year), the derivative work must:
+     - Be completely free and open-source.
+     - Not be used for commercial purposes.
 
-4. 分发条款细化
-   - 分发二进制文件时，可选择以下任一方式：
-     - 提供完整的修改后源代码（无需强制公开所有修改细节）。
-     - 提供原始项目源代码（版权持有人发布的版本）。
+4. Distribution Terms Refinement
+   - When distributing binary files, you may choose one of the following options:
+     - Provide the complete modified source code (without the obligation to disclose all modification details).
+     - Provide the original project source code (the version released by the copyright holder).
 
-5. 许可证传染性实施
-   - 基于GPLv3第6条和第7条的规定：
-     - 任何包含本代码的衍生作品必须采用相同许可证。
-     - 静态链接或紧密集成视为衍生作品。
-     - 必须保留原始许可证核心条款，不得附加额外限制。
+5. License Virality Implementation
+   - Based on GPLv3 Sections 6 and 7:
+     - Any derivative work containing this code must adopt the same license.
+     - Static linking or close integration is considered a derivative work.
+     - The core terms of the original license must be retained, and no additional restrictions may be added.
