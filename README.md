@@ -86,3 +86,4 @@ novel-reader/
 如有任何问题或建议，欢迎通过以下方式联系我们：
 
 - 邮箱：leo43991314520@outlook.com
+- GitHub：[@taboo-hacker](https://github.com/taboo-hacker)
