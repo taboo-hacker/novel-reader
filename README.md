@@ -79,7 +79,7 @@ novel-reader/
 
 ## 📜 开源协议
 
-本项目根据 [MIT License](LICENSE) 授权。详见 [LICENSE](LICENSE) 文件。
+本项目根据 [GNU General Public License v3.0](LICENSE) 授权。详情请参阅 [LICENSE](LICENSE) 文件。
 
 ## 📞 联系方式
 
