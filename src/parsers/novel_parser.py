@@ -49,20 +49,24 @@ def novel_chapterizer(txt_content: str) -> List[Dict[str, Any]]:
                     # 过滤空行
                     content = [line.strip() for line in content if line.strip()]
                     
-                    chapters.append({
-                        "title": title,
-                        "content": content
-                    })
+                    # 只添加内容不为空的章节
+                    if content:
+                        chapters.append({
+                            "title": title,
+                            "content": content
+                        })
                 else:
                     # 处理特殊情况，没有明确的标题和内容分隔
                     title = f"第{i+1}章"
                     content = chapter_raw.split("\n")
                     content = [line.strip() for line in content if line.strip()]
                     
-                    chapters.append({
-                        "title": title,
-                        "content": content
-                    })
+                    # 只添加内容不为空的章节
+                    if content:
+                        chapters.append({
+                            "title": title,
+                            "content": content
+                        })
                     
             except Exception as e:
                 logging.error(f"处理章节时出错: {str(e)}")

@@ -43,13 +43,19 @@ def extract_txt_from_zip(zip_path: str) -> Optional[str]:
                 return None
             
             # 移除VIP文件
-            txt_files = [f for f in txt_files if f != "Vip╙├╗º▒╪╢┴.txt"]
+            txt_files = [f for f in txt_files if f != "Vip╙├╗º▒╪╢┴.txt" and f != "Vip用户必读.txt"]
             
             if not txt_files:
                 logging.warning(f"ZIP文件中仅包含VIP文件: {zip_path}")
                 return None
             
-            txt_file = txt_files[0]
+            # 优先选择带有"-飞卢小说网.txt"的文件
+            feilu_files = [f for f in txt_files if "-飞卢小说网.txt" in f]
+            if feilu_files:
+                txt_file = feilu_files[0]
+            else:
+                # 如果没有找到，选择第一个文件
+                txt_file = txt_files[0]
             
             # 尝试使用不同编码解码文件
             encodings = ['gbk', 'utf-8', 'utf-16', 'iso-8859-1']
@@ -58,6 +64,15 @@ def extract_txt_from_zip(zip_path: str) -> Optional[str]:
                 try:
                     content = zip_ref.read(txt_file).decode(encoding)
                     logging.info(f"使用{encoding}编码成功解码文件: {txt_file}")
+                    
+                    # 对于带有"-飞卢小说网.txt"的文件，跳过第一行（小说标题）
+                    if "-飞卢小说网.txt" in txt_file:
+                        lines = content.split('\n')
+                        if len(lines) > 1:
+                            # 跳过第一行，重新组合内容
+                            content = '\n'.join(lines[1:])
+                            logging.info(f"跳过了文件{txt_file}的第一行小说标题")
+                    
                     return content
                 except UnicodeDecodeError:
                     continue

@@ -86,6 +86,10 @@ def generate_html(chapters: Optional[List[Dict[str, Any]]] = None, path: str = "
             # 显示章节列表
             html_content += '<section class="chapter-list">'
             html_content += '<h2>章节列表</h2>'
+            # 添加返回首页链接
+            html_content += '<div class="navigation-links">'
+            html_content += f'<a href="/" class="home-link">返回首页</a>'
+            html_content += '</div>'
             html_content += '<ul class="chapter-list">'
             
             if chapters and len(chapters) > 0:
