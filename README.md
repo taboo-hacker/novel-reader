@@ -4,8 +4,7 @@
 </div>
 
 ![Python](https://img.shields.io/badge/Python-3.13+-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-
+![License](https://img.shields.io/badge/License-GNU%20GPL%20v3.0-green)
 
 
 ## 📦 项目结构
