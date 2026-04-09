@@ -14,6 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+配置文件模块
+
+该模块定义了小说阅读器的各种配置选项，包括服务端口、路径配置、日志配置和小说配置等。
+"""
+
 import os
 
 # 基础配置
@@ -21,7 +27,7 @@ DEBUG = False  # 默认关闭调试模式
 ENV = "production"  # 默认环境为生产环境
 
 # 服务配置
-PORT = 8080  # 服务开启端口
+PORT = 8081  # 服务开启端口
 
 # 路径配置
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

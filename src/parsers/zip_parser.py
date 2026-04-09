@@ -14,6 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+ZIP文件解析模块
+
+该模块负责从ZIP文件中提取文本内容，支持多种编码格式的自动检测。
+"""
+
 import zipfile
 import logging
 from typing import Optional
@@ -33,20 +39,22 @@ def extract_txt_from_zip(zip_path: str) -> Optional[str]:
         FileNotFoundError: 如果ZIP文件不存在
         zipfile.BadZipFile: 如果ZIP文件无效
     """
+    result = None
     try:
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             # 获取ZIP文件中的所有TXT文件
             txt_files = [f for f in zip_ref.namelist() if f.endswith('.txt')]
             
             if not txt_files:
-                logging.warning(f"ZIP文件中未找到TXT文件: {zip_path}")
+                logging.warning("ZIP文件中未找到TXT文件: %s", zip_path)
                 return None
             
             # 移除VIP文件
-            txt_files = [f for f in txt_files if f != "Vip╙├╗º▒╪╢┴.txt" and f != "Vip用户必读.txt"]
+            vip_files = ["Vip╙├╗º▒╪╢┴.txt", "Vip用户必读.txt"]
+            txt_files = [f for f in txt_files if f not in vip_files]
             
             if not txt_files:
-                logging.warning(f"ZIP文件中仅包含VIP文件: {zip_path}")
+                logging.warning("ZIP文件中仅包含VIP文件: %s", zip_path)
                 return None
             
             # 优先选择带有"-飞卢小说网.txt"的文件
@@ -63,7 +71,7 @@ def extract_txt_from_zip(zip_path: str) -> Optional[str]:
             for encoding in encodings:
                 try:
                     content = zip_ref.read(txt_file).decode(encoding)
-                    logging.info(f"使用{encoding}编码成功解码文件: {txt_file}")
+                    logging.info("使用%s编码成功解码文件: %s", encoding, txt_file)
                     
                     # 对于带有"-飞卢小说网.txt"的文件，跳过第一行（小说标题）
                     if "-飞卢小说网.txt" in txt_file:
@@ -71,21 +79,21 @@ def extract_txt_from_zip(zip_path: str) -> Optional[str]:
                         if len(lines) > 1:
                             # 跳过第一行，重新组合内容
                             content = '\n'.join(lines[1:])
-                            logging.info(f"跳过了文件{txt_file}的第一行小说标题")
+                            logging.info("跳过了文件%s的第一行小说标题", txt_file)
                     
-                    return content
+                    result = content
+                    break
                 except UnicodeDecodeError:
                     continue
             
-            logging.error(f"无法解码TXT文件: {txt_file}")
-            return None
+            if not result:
+                logging.error("无法解码TXT文件: %s", txt_file)
             
     except FileNotFoundError:
-        logging.error(f"ZIP文件不存在: {zip_path}")
-        return None
+        logging.error("ZIP文件不存在: %s", zip_path)
     except zipfile.BadZipFile:
-        logging.error(f"无效的ZIP文件: {zip_path}")
-        return None
+        logging.error("无效的ZIP文件: %s", zip_path)
     except Exception as e:
-        logging.error(f"提取TXT文件时出错: {str(e)}")
-        return None
+        logging.error("提取TXT文件时出错: %s", str(e))
+    
+    return result

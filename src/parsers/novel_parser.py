@@ -14,6 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+小说章节解析模块
+
+该模块负责将小说文本内容分章处理，提取章节标题和内容。
+"""
+
 import logging
 from typing import List, Dict, Any
 
@@ -28,14 +34,13 @@ def novel_chapterizer(txt_content: str) -> List[Dict[str, Any]]:
     Returns:
         分章后的章节列表，每个章节包含标题和内容
     """
+    chapters = []
     try:
         # 预处理文本，移除多余的回车和空格
         processed_content = txt_content.replace("\r", "").replace("\u3000", "")
         
         # 分割章节
         chapters_raw = processed_content.split("\n             ")
-        
-        chapters = []
         
         for i, chapter_raw in enumerate(chapters_raw):
             try:
@@ -57,7 +62,7 @@ def novel_chapterizer(txt_content: str) -> List[Dict[str, Any]]:
                         })
                 else:
                     # 处理特殊情况，没有明确的标题和内容分隔
-                    title = f"第{i+1}章"
+                    title = "第{0}章".format(i+1)
                     content = chapter_raw.split("\n")
                     content = [line.strip() for line in content if line.strip()]
                     
@@ -69,14 +74,14 @@ def novel_chapterizer(txt_content: str) -> List[Dict[str, Any]]:
                         })
                     
             except Exception as e:
-                logging.error(f"处理章节时出错: {str(e)}")
+                logging.error("处理章节时出错: %s", str(e))
                 # 跳过错误章节，继续处理其他章节
                 continue
         
-        logging.info(f"成功解析{len(chapters)}个章节")
-        return chapters
+        logging.info("成功解析%s个章节", len(chapters))
         
     except Exception as e:
-        logging.error(f"分章处理时出错: {str(e)}")
+        logging.error("分章处理时出错: %s", str(e))
         # 返回空列表作为错误处理
-        return []
+    
+    return chapters

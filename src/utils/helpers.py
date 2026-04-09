@@ -14,10 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+工具函数模块
+
+该模块提供了各种辅助函数，包括路径安全处理、输入验证、缓存装饰器和文件编码检测等。
+"""
+
 import os
 import logging
 from functools import lru_cache
-from typing import Optional, List, Dict, Any
+from typing import Optional
 
 
 def safe_join(base: str, *paths: str) -> Optional[str]:
@@ -40,13 +46,13 @@ def safe_join(base: str, *paths: str) -> Optional[str]:
         
         # 检查目标路径是否在基础路径内
         if os.path.commonpath([base, target_path]) != base:
-            logging.warning(f"不安全的路径访问尝试: {target_path}")
+            logging.warning("不安全的路径访问尝试: %s", target_path)
             return None
         
         return target_path
         
     except Exception as e:
-        logging.error(f"路径处理时出错: {str(e)}")
+        logging.error("路径处理时出错: %s", str(e))
         return None
 
 
@@ -65,7 +71,7 @@ def validate_path(path: str) -> bool:
     
     for pattern in dangerous_patterns:
         if pattern in path:
-            logging.warning(f"路径包含危险模式: {pattern}")
+            logging.warning("路径包含危险模式: %s", pattern)
             return False
     
     return True
@@ -88,7 +94,7 @@ def validate_novel_name(name: str) -> bool:
     
     # 检查名称长度
     if len(name) > 100:
-        logging.warning(f"小说名称过长: {name}")
+        logging.warning("小说名称过长: %s", name)
         return False
     
     # 检查名称是否包含危险字符
@@ -96,7 +102,7 @@ def validate_novel_name(name: str) -> bool:
     
     for char in dangerous_chars:
         if char in name:
-            logging.warning(f"小说名称包含危险字符: {char}")
+            logging.warning("小说名称包含危险字符: %s", char)
             return False
     
     return True
@@ -120,7 +126,7 @@ def cached_function(maxsize: int = 128):
             try:
                 return cached_func(*args, **kwargs)
             except Exception as e:
-                logging.error(f"缓存函数执行时出错: {str(e)}")
+                logging.error("缓存函数执行时出错: %s", str(e))
                 # 出错时直接执行原函数，不使用缓存
                 return func(*args, **kwargs)
         
@@ -153,7 +159,7 @@ def get_file_encoding(file_path: str) -> Optional[str]:
         except UnicodeDecodeError:
             continue
         except Exception as e:
-            logging.error(f"检测文件编码时出错: {str(e)}")
+            logging.error("检测文件编码时出错: %s", str(e))
             continue
     
     return None

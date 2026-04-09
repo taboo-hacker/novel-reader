@@ -14,6 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+HTTP服务器实现模块
+
+该模块负责启动HTTP服务器并处理请求，包括静态文件、小说列表和章节内容的请求。
+"""
+
 import os
 import logging
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -44,7 +50,7 @@ logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
 # 缓存装饰器，用于缓存小说解析结果
-@cached_function(maxsize=32)
+@cached_function(maxsize=64)
 def extract_and_parse_novel(zip_path: str):
     """
     提取并解析小说内容，使用缓存提高性能
@@ -65,11 +71,11 @@ class NovelHTTPRequestHandler(BaseHTTPRequestHandler):
     小说阅读器的HTTP请求处理器
     """
     
-    def log_message(self, format, *args):
+    def log_message(self, fmt, *args):
         """
         自定义日志格式，记录到文件中
         """
-        logging.info(f"{self.client_address[0]} - - [{self.log_date_time_string()}] {format % args}")
+        logging.info("%s - - [%s] %s", self.client_address[0], self.log_date_time_string(), fmt % args)
     
     def do_GET(self):
         """
@@ -90,7 +96,7 @@ class NovelHTTPRequestHandler(BaseHTTPRequestHandler):
             self._handle_novel_request()
             
         except Exception as e:
-            logging.error(f"请求处理时出错: {str(e)}")
+            logging.error("请求处理时出错: %s", str(e))
             self._send_error(500, "Internal Server Error")
     
     def _handle_static_file(self):
@@ -124,10 +130,10 @@ class NovelHTTPRequestHandler(BaseHTTPRequestHandler):
             with open(file_path, 'rb') as f:
                 self.wfile.write(f.read())
             
-            logging.info(f"成功返回静态文件: {self.path}")
+            logging.info("成功返回静态文件: %s", self.path)
             
         except Exception as e:
-            logging.error(f"处理静态文件时出错: {str(e)}")
+            logging.error("处理静态文件时出错: %s", str(e))
             self._send_error(500, "Internal Server Error")
     
     def _handle_root(self):
@@ -140,7 +146,7 @@ class NovelHTTPRequestHandler(BaseHTTPRequestHandler):
             logging.info("成功返回小说列表页面")
             
         except Exception as e:
-            logging.error(f"处理根路径时出错: {str(e)}")
+            logging.error("处理根路径时出错: %s", str(e))
             self._send_error(500, "Internal Server Error")
     
     def _handle_novel_request(self):
@@ -190,10 +196,10 @@ class NovelHTTPRequestHandler(BaseHTTPRequestHandler):
                 html_content = generate_html(chapters, self.path)
             
             self._send_html(html_content)
-            logging.info(f"成功返回小说内容: {self.path}")
+            logging.info("成功返回小说内容: %s", self.path)
             
         except Exception as e:
-            logging.error(f"处理小说请求时出错: {str(e)}")
+            logging.error("处理小说请求时出错: %s", str(e))
             self._send_error(500, "Internal Server Error")
     
     def _send_html(self, html_content: str):
@@ -220,24 +226,24 @@ class NovelHTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
         
-        error_html = f"""
+        error_html = """
         <!DOCTYPE html>
         <html lang="zh-CN">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>{status_code} - {message}</title>
+            <title>{0} - {1}</title>
             <link rel="stylesheet" href="/static/css/style.css">
         </head>
         <body>
             <div class="container">
-                <h1>{status_code} - {message}</h1>
+                <h1>{0} - {1}</h1>
                 <p>抱歉，请求处理时发生错误。</p>
                 <a href="/">返回首页</a>
             </div>
         </body>
         </html>
-        """
+        """.format(status_code, message)
         
         self.wfile.write(error_html.encode('utf-8'))
     
@@ -273,15 +279,15 @@ def start_server():
     server_address = ('', PORT)
     httpd = HTTPServer(server_address, NovelHTTPRequestHandler)
     
-    server_url = f"http://127.0.0.1:{PORT}"
-    logging.info(f"服务器启动成功，地址为: {server_url}")
+    server_url = "http://127.0.0.1:{0}".format(PORT)
+    logging.info("服务器启动成功，地址为: %s", server_url)
     
     # 自动打开浏览器
     try:
         op(server_url)
         logging.info("已自动打开浏览器")
     except Exception as e:
-        logging.warning(f"无法自动打开浏览器: {str(e)}")
+        logging.warning("无法自动打开浏览器: %s", str(e))
     
     # 启动服务器
     try:
