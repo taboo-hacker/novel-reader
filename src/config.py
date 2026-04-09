@@ -27,7 +27,7 @@ DEBUG = False  # 默认关闭调试模式
 ENV = "production"  # 默认环境为生产环境
 
 # 服务配置
-PORT = 8081  # 服务开启端口
+PORT = 8080  # 服务开启端口
 
 # 路径配置
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
